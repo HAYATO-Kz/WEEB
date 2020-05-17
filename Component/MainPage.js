@@ -1,7 +1,5 @@
 import * as React from 'react';
-import {View} from 'react-native';
 import {Icon} from 'native-base';
-import database from '@react-native-firebase/database';
 import Profile from './Profile';
 import ReviewList from './ReviewList';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';

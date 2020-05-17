@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 import auth from '@react-native-firebase/auth';
 import {
   Container,
-  Header,
   Content,
   Input,
   Item,
@@ -11,7 +10,7 @@ import {
   Label,
 } from 'native-base';
 import {Alert} from 'react-native';
-import {Col, Row, Grid} from 'react-native-easy-grid';
+import {Row, Grid} from 'react-native-easy-grid';
 
 const HomeScene = ({navigation}) => {
   const [email, setEmail] = useState();
@@ -40,14 +39,14 @@ const HomeScene = ({navigation}) => {
       })
       .catch(error => {
         if (error.code === 'auth/email-already-in-use') {
-          Alert.aleart('That email address is already in use!');
+          Alert.alert('That email address is already in use!');
         }
 
         if (error.code === 'auth/invalid-email') {
           Alert.alert('That email address is invalid!');
+        } else {
+          Alert.alert(error.code);
         }
-
-        Alert.alert(error.code);
       });
   };
 

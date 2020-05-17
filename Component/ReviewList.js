@@ -37,7 +37,6 @@ const MainPage = ({navigation}) => {
         setReviewData(receivceData);
         setDefaultData(receivceData);
       });
-    // Stop listening for updates when no longer required
     return () => subscriber();
   }, []);
 

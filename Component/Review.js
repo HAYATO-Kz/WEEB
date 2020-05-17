@@ -44,7 +44,6 @@ const Review = ({route, navigation}) => {
           }
         }
       });
-    // Stop listening for updates when no longer required
     return () => subscriber();
   }, [id]);
 

@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from 'react';
-// import uniqueId from 'react-native-unique-id';
 import database from '@react-native-firebase/database';
 import auth from '@react-native-firebase/auth';
 import {
@@ -15,7 +14,6 @@ import {
   Input,
   Item,
   Textarea,
-  Label,
 } from 'native-base';
 import {Alert, Image} from 'react-native';
 import ImagePicker from 'react-native-image-picker';
@@ -29,14 +27,6 @@ const WriteBlog = ({navigation}) => {
   const [review, setReviewMessage] = useState();
 
   const handleChoosePhoto = () => {
-    // const options = {
-    //   noData: true,
-    // };
-    // ImagePicker.launchImageLibrary(options, response => {
-    //   if (response.uri) {
-    //     setImage(response);
-    //   }
-    // });
     var options = {
       title: 'Select Image',
       storageOptions: {
@@ -45,16 +35,21 @@ const WriteBlog = ({navigation}) => {
       },
     };
     ImagePicker.showImagePicker(options, response => {
-      console.log('Response = ', response);
-
       if (response.didCancel) {
         Alert.alert('User cancelled image picker');
       } else if (response.error) {
         Alert.alert('ImagePicker Error: ', response.error);
       } else {
-        let source = response;
-        setImage(source);
+        setImage({uri: response.uri});
       }
+    });
+  };
+
+  const uuid = () => {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+      var r = (Math.random() * 16) | 0,
+        v = c == 'x' ? r : (r & 0x3) | 0x8;
+      return v.toString(16);
     });
   };
 
@@ -69,7 +64,7 @@ const WriteBlog = ({navigation}) => {
       Alert.alert('Please fill every field');
       return;
     }
-    if (isNaN(score) || isNaN(score)) {
+    if (isNaN(score) || isNaN(price)) {
       Alert.alert('score and price should be number');
       return;
     }
@@ -79,26 +74,21 @@ const WriteBlog = ({navigation}) => {
       return;
     }
 
-    const uniqueId = require('react-native-unique-id');
     let user = auth().currentUser;
-    uniqueId()
-      .then(id => {
-        let path = '/reviews/' + title + '_' + id;
-        database()
-          .ref(path)
-          .set({
-            title,
-            price,
-            score,
-            review,
-            image,
-            reviewer: user.displayName,
-          })
-          .then(() => navigation.navigate('Main'))
-          .catch(error => Alert.alert(error.code));
+    let id = uuid();
+    let path = '/reviews/' + title + '_' + id;
+    database()
+      .ref(path)
+      .set({
+        title,
+        price,
+        score,
+        review,
+        image,
+        reviewer: user.displayName,
       })
+      .then(() => navigation.navigate('Main'))
       .catch(error => Alert.alert(error.code));
-    navigation.navigate('Main');
   };
 
   return (

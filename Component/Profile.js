@@ -8,7 +8,6 @@ import {
   Icon,
   Text,
   Left,
-  Body,
   Button,
   Right,
   List,
@@ -40,14 +39,6 @@ const Profile = ({navigation}) => {
         }
       });
   }, [user.uid]);
-
-  const securePassword = pwd => {
-    let securePwd = '';
-    for (let i = 0; i < pwd.length; i++) {
-      securePwd += '*';
-    }
-    return securePwd;
-  };
 
   return (
     <Container>

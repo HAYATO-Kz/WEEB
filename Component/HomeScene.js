@@ -2,18 +2,15 @@ import React, {useState} from 'react';
 import auth from '@react-native-firebase/auth';
 import {
   Container,
-  Header,
   Content,
   Input,
   Item,
   Button,
   Text,
-  Body,
-  Title,
   Label,
 } from 'native-base';
 import {Alert} from 'react-native';
-import {Col, Row, Grid} from 'react-native-easy-grid';
+import {Row, Grid} from 'react-native-easy-grid';
 
 const HomeScene = ({navigation}) => {
   const [email, setEmail] = useState();
@@ -33,7 +30,7 @@ const HomeScene = ({navigation}) => {
       })
       .catch(error => {
         if (error.code === 'auth/wrong-password') {
-          Alert.aleart('Wrong password!!!');
+          Alert.alert('Wrong password!!!');
         }
 
         if (error.code === 'auth/invalid-email') {
